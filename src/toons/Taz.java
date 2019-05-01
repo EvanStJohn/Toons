@@ -70,4 +70,20 @@ public class Taz extends Thread {
     {
         return board.getTaz();
     }
+    
+    public void giveStartingLocation()
+    {
+        Random r = new Random();
+        int x = r.nextInt(4);
+        int y = r.nextInt(4);
+        boolean cont = true;
+        while(cont) {
+            if (board.spaceOccupiedBy(x, y) == 0) {
+                position[0] = x;
+                position[1] = y;
+                board.editSpace(3, x, y);
+                cont = false;
+            }
+        }
+    }
 }
