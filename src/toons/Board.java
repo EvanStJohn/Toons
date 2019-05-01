@@ -4,6 +4,7 @@ public class Board {
     
     private int[][] board = new int[5][5];
     private int[] mountain = new int[2];
+    private int[] carrot = new int[2];
     private int winner = 0; // id of the winning toon
     private boolean bugs = true; // is bugs alive
     private boolean tweety = true; // is tweety alive
@@ -19,6 +20,12 @@ public class Board {
     public int[] getMountain()
     {
         return mountain;
+    }
+    
+    // get position of carrots
+    public int[] getCarrot()
+    {
+        return carrot;
     }
     
     public void killBugs()
