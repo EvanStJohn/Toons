@@ -3,7 +3,7 @@ package toons;
 public class Tweety extends Thread {
     
     Mutex lock;
-    int carrot = 0;
+    int carrot = 0; // amount of carrots being held
     int[] position;
     Board board;
     
