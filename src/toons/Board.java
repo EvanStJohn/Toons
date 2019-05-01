@@ -50,6 +50,16 @@ public class Board {
         return taz;
     }
     
+    public int spaceOccupiedBy(int x, int y)
+    {
+        return board[x][y];
+    }
+    
+    public void editSpace(int newID, int x, int y)
+    {
+        board[x][y] = newID;
+    }
+    
     public boolean isLiving()
     {
         if (alive > 0)
