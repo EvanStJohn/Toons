@@ -31,7 +31,7 @@ public class Bugs extends Thread {
                     
                     // add code below
                     
-                    
+                    // can prtin board here on each player
                     Thread.sleep(1000);
                     lock.flag = 2;
                     lock.notifyAll();
