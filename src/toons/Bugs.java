@@ -1,10 +1,12 @@
 package toons;
 
+import java.util.Random;
+
 public class Bugs extends Thread {
      
     Mutex lock;
     int carrot = 0; // amount of carrots being held
-    int[] position;
+    int[] position = new int[2];
     Board board;
     
     Bugs(Mutex lock, Board board)
@@ -74,8 +76,8 @@ public class Bugs extends Thread {
     public void giveStartingLocation()
     {
         Random r = new Random();
-        int x = r.nextInt(4);
-        int y = r.nextInt(4);
+        int x = r.nextInt(5);
+        int y = r.nextInt(5);
         boolean cont = true;
         while(cont) {
             if (board.spaceOccupiedBy(x, y) == 0) {
@@ -83,6 +85,152 @@ public class Bugs extends Thread {
                 position[1] = y;
                 board.editSpace(1, x, y);
                 cont = false;
+            }
+        }
+    }
+    
+    public void move()
+    {
+        boolean cont = true;
+        Random r = new Random();
+        int num = r.nextInt(8);
+        
+        while (cont)
+        {
+            switch(num) 
+            {
+                case 0:
+                    // up
+                    if (position[0] == 0)
+                    {
+                        break;
+                    }
+                    
+                    if (board.spaceOccupiedBy(position[0] - 1, position[1]) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1]) > 0)
+                    {
+                        break;
+                    }
+                    
+                    board.editSpace(0, position[0], position[1]);
+                    position[0] =- 1;
+                    board.editSpace(1, position[0], position[1]);
+                    break;
+                case 1:
+                    // down
+                    if (position[0] == 4)
+                    {
+                        break;
+                    }
+                    
+                    if (board.spaceOccupiedBy(position[0] + 1, position[1]) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1]) > 0)
+                    {
+                        break;
+                    }
+                    
+                    board.editSpace(0, position[0], position[1]);
+                    position[0] =+ 1;
+                    board.editSpace(1, position[0], position[1]);
+                    break;
+                case 2:
+                    // left
+                    if (position[1] == 0)
+                    {
+                        break;
+                    }
+                    
+                    if (board.spaceOccupiedBy(position[0], position[1] - 1) < 5 && board.spaceOccupiedBy(position[0], position[1] - 1) > 0)
+                    {
+                        break;
+                    }
+                    
+                    board.editSpace(0, position[0], position[1]);
+                    position[1] =- 1;
+                    board.editSpace(1, position[0], position[1]);
+                    break;
+                case 3:
+                    // right
+                    if (position[1] == 4)
+                    {
+                        break;
+                    }
+                    
+                    if (board.spaceOccupiedBy(position[0], position[1] + 1) < 5 && board.spaceOccupiedBy(position[0], position[1] + 1) > 0)
+                    {
+                        break;
+                    }
+                    
+                    board.editSpace(0, position[0], position[1]);
+                    position[1] =+ 1;
+                    board.editSpace(1, position[0], position[1]);
+                    break;
+                case 4:
+                    // up, left
+                    if (position[0] == 0 || position[1] == 0)
+                    {
+                        break;
+                    }
+                    
+                    if (board.spaceOccupiedBy(position[0] - 1, position[1] - 1) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1] - 1) > 0)
+                    {
+                        break;
+                    }
+                    
+                    board.editSpace(0, position[0], position[1]);
+                    position[0] =- 1;
+                    position[1] =- 1;
+                    board.editSpace(1, position[0], position[1]);
+                    break;
+                case 5:
+                    // up, right
+                    if (position[0] == 0 || position[1] == 4)
+                    {
+                        break;
+                    }
+                    
+                    if (board.spaceOccupiedBy(position[0] - 1, position[1] + 1) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1] + 1) > 0)
+                    {
+                        break;
+                    }
+                    
+                    board.editSpace(0, position[0], position[1]);
+                    position[0] =- 1;
+                    position[1] =+ 1;
+                    board.editSpace(1, position[0], position[1]);
+                    break;
+                case 6:
+                    //down, left
+                    if (position[0] == 4 || position[1] == 0)
+                    {
+                        break;
+                    }
+                    
+                    if (board.spaceOccupiedBy(position[0] + 1, position[1] - 1) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1] - 1) > 0)
+                    {
+                        break;
+                    }
+                    
+                    board.editSpace(0, position[0], position[1]);
+                    position[0] =+ 1;
+                    position[1] =- 1;
+                    board.editSpace(1, position[0], position[1]);
+                    break;
+                case 7:
+                    // down, right
+                    if (position[0] == 4 || position[1] == 4)
+                    {
+                        break;
+                    }
+                    
+                    if (board.spaceOccupiedBy(position[0] + 1, position[1] + 1) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1] + 1) > 0)
+                    {
+                        break;
+                    }
+                    
+                    board.editSpace(0, position[0], position[1]);
+                    position[0] =+ 1;
+                    position[1] =+ 1;
+                    board.editSpace(1, position[0], position[1]);
+                    break;
             }
         }
     }

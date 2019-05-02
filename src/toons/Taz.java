@@ -1,10 +1,12 @@
 package toons;
 
+import java.util.Random;
+
 public class Taz extends Thread {
     
     Mutex lock;
     int carrot = 0; // amount of carrots being held
-    int[] position;
+    int[] position = new int[2];
     Board board;
     
     Taz(Mutex lock, Board board)
@@ -74,8 +76,8 @@ public class Taz extends Thread {
     public void giveStartingLocation()
     {
         Random r = new Random();
-        int x = r.nextInt(4);
-        int y = r.nextInt(4);
+        int x = r.nextInt(5);
+        int y = r.nextInt(5);
         boolean cont = true;
         while(cont) {
             if (board.spaceOccupiedBy(x, y) == 0) {
