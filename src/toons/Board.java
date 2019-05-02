@@ -84,7 +84,7 @@ public class Board {
         }
     }
     
-    public void moveMountains()
+    public void moveMountain()
     {
         Random r = new Random();
         
