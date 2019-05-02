@@ -11,6 +11,9 @@ public class Toons {
         Tweety tweety = new Tweety(lock, board);
         Taz taz = new Taz(lock, board);
         
+        board.moveMountains();
+        board.placeCarrots();
+        
         bugs.giveStartingLocation();
         tweety.giveStartingLocation();
         taz.giveStartingLocation();
