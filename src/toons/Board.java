@@ -84,8 +84,48 @@ public class Board {
         }
     }
     
+    public void moveMountains()
+    {
+        Random r = new Random();
+        
+        boolean cont = true;
+        while(cont) {
+            int x = r.nextInt(4);
+            int y = r.nextInt(4);
+            
+            if (spaceOccupiedBy(x, y) == 0) {
+                mountain[0] = x;
+                mountain[1] = y;
+                board[x][y] = 8;
+                cont = false;
+            }
+        }
+
+    }
+    
+    public void placeCarrots()
+    {
+        Random r = new Random();
+        
+        int c = 0;
+        while(c < 2) {
+            int x = r.nextInt(4);
+            int y = r.nextInt(4);
+            
+            if (spaceOccupiedBy(x, y) == 0) {
+                carrot[c][0] = x;
+                carrot[c][1] = y;
+                board[x][y] = 7;
+                
+                c++;
+            }
+        }
+
+    }
+    
     public void printBoard()
     {
+
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 System.out.print(board[i][j]);
