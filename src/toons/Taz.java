@@ -95,9 +95,20 @@ public class Taz extends Thread {
     {
         Random rand = new Random();
         boolean cont = true;
+        
         while(cont) {
-            int newX = position[0] + (rand.nextInt(2) - 1);
-            int newY = position[1] + (rand.nextInt(2) - 1);
+            int vertOrhoriz = rand.nextInt(2);
+            System.out.print(vertOrhoriz);
+            int newX;
+            int newY;
+            if (vertOrhoriz == 0) {
+                newX = position[0] + (rand.nextInt(3) - 1);
+                newY = position[1];
+            }
+            else {
+                newX = position[0];
+                newY = position[1] + (rand.nextInt(3) - 1);  
+            }
             
             int valueOfLocation = board.spaceOccupiedBy(newX, newY);
             if (valueOfLocation == 0) {
@@ -107,23 +118,19 @@ public class Taz extends Thread {
                 board.editSpace(3, newX, newY);
                 cont = false;
             }
-            else if(valueOfLocation == 7) {
-                if (carrot == 0) {
-                    board.editSpace(0, position[0], position[1]);
-                    position[0] = newX;
-                    position[1] = newY;
-                    board.editSpace(3, newX, newY);
-                    carrot++;
-                    cont = false;
-                }
+            else if(valueOfLocation == 7 && carrot == 0) {
+                board.editSpace(0, position[0], position[1]);
+                position[0] = newX;
+                position[1] = newY;
+                board.editSpace(3, newX, newY);
+                carrot++;
+                cont = false;
             }
-            else if(valueOfLocation == 8) {
-                if (carrot == 1) {
-                    board.editSpace(0, position[0], position[1]);
-                    position[0] = newX;
-                    position[1] = newY;
-                    cont = false;
-                }
+            else if(valueOfLocation == 8 && carrot == 1) {
+                board.editSpace(0, position[0], position[1]);
+                position[0] = newX;
+                position[1] = newY;
+                cont = false;
             }
         }
     }
