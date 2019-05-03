@@ -10,14 +10,20 @@ public class Toons {
         Bugs bugs = new Bugs(lock, board);
         Tweety tweety = new Tweety(lock, board);
         Taz taz = new Taz(lock, board);
+        Marvin marvin = new Marvin(lock, board);
+        
+        board.moveMountain();
+        board.placeCarrots();
         
         bugs.giveStartingLocation();
         tweety.giveStartingLocation();
         taz.giveStartingLocation();
+        marvin.giveStartingLocation();
         
         bugs.start();
         tweety.start();
         taz.start();
+        marvin.start();
     }
     
 }

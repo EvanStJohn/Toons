@@ -32,6 +32,7 @@ public class Marvin extends Thread {
                     // add code below
                     
                     
+                    
                     Thread.sleep(1000);
                     lock.flag = 1;
                     lock.notifyAll();
@@ -71,10 +72,10 @@ public class Marvin extends Thread {
     public void giveStartingLocation()
     {
         Random r = new Random();
-        int x = r.nextInt(5);
-        int y = r.nextInt(5);
         boolean cont = true;
         while(cont) {
+            int x = r.nextInt(5);
+            int y = r.nextInt(5);
             if (board.spaceOccupiedBy(x, y) == 0) {
                 position[0] = x;
                 position[1] = y;

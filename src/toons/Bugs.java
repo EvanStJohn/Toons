@@ -1,5 +1,6 @@
 package toons;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Bugs extends Thread {
@@ -29,9 +30,9 @@ public class Bugs extends Thread {
                         lock.wait();
                     }
                     
-                    // add code below
-                    
-                    
+                    move();
+                    board.printBoard();   
+                      
                     Thread.sleep(1000);
                     lock.flag = 2;
                     lock.notifyAll();
@@ -76,10 +77,10 @@ public class Bugs extends Thread {
     public void giveStartingLocation()
     {
         Random r = new Random();
-        int x = r.nextInt(5);
-        int y = r.nextInt(5);
         boolean cont = true;
         while(cont) {
+            int x = r.nextInt(5);
+            int y = r.nextInt(5);
             if (board.spaceOccupiedBy(x, y) == 0) {
                 position[0] = x;
                 position[1] = y;
@@ -92,146 +93,309 @@ public class Bugs extends Thread {
     public void move()
     {
         boolean cont = true;
-        Random r = new Random();
-        int num = r.nextInt(8);
+        int count;
+        int mountain[] = board.getMountain();
         
         while (cont)
         {
-            switch(num) 
+            count = 0;
+            Random r = new Random();
+            int num = r.nextInt(8);
+            
+            if (num == 0)
             {
-                case 0:
-                    // up
-                    if (position[0] == 0)
+                // up
+                if (position[0] == 0)
+                {
+                    count++;
+                }
+                
+                if (board.spaceOccupiedBy(position[0] - 1, position[1]) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1]) > 0)
+                {
+                    count++;
+                }
+                
+                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
+                {
+                    if (carrot < 1)
                     {
-                        break;
+                        count++;
                     }
-                    
-                    if (board.spaceOccupiedBy(position[0] - 1, position[1]) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1]) > 0)
-                    {
-                        break;
-                    }
-                    
+                }
+                
+                if (count == 0)
+                {
                     board.editSpace(0, position[0], position[1]);
                     position[0] =- 1;
                     board.editSpace(1, position[0], position[1]);
-                    break;
-                case 1:
-                    // down
-                    if (position[0] == 4)
+
+                    if (Arrays.equals(position, board.getCarrot()[0]) || Arrays.equals(position, board.getCarrot()[1]))
                     {
-                        break;
+                        carrot += 1;
                     }
                     
-                    if (board.spaceOccupiedBy(position[0] + 1, position[1]) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1]) > 0)
-                    {
-                        break;
-                    }
+
+                    cont = false;
                     
-                    board.editSpace(0, position[0], position[1]);
-                    position[0] =+ 1;
-                    board.editSpace(1, position[0], position[1]);
-                    break;
-                case 2:
-                    // left
-                    if (position[1] == 0)
-                    {
-                        break;
-                    }
-                    
-                    if (board.spaceOccupiedBy(position[0], position[1] - 1) < 5 && board.spaceOccupiedBy(position[0], position[1] - 1) > 0)
-                    {
-                        break;
-                    }
-                    
-                    board.editSpace(0, position[0], position[1]);
-                    position[1] =- 1;
-                    board.editSpace(1, position[0], position[1]);
-                    break;
-                case 3:
-                    // right
-                    if (position[1] == 4)
-                    {
-                        break;
-                    }
-                    
-                    if (board.spaceOccupiedBy(position[0], position[1] + 1) < 5 && board.spaceOccupiedBy(position[0], position[1] + 1) > 0)
-                    {
-                        break;
-                    }
-                    
-                    board.editSpace(0, position[0], position[1]);
-                    position[1] =+ 1;
-                    board.editSpace(1, position[0], position[1]);
-                    break;
-                case 4:
-                    // up, left
-                    if (position[0] == 0 || position[1] == 0)
-                    {
-                        break;
-                    }
-                    
-                    if (board.spaceOccupiedBy(position[0] - 1, position[1] - 1) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1] - 1) > 0)
-                    {
-                        break;
-                    }
-                    
-                    board.editSpace(0, position[0], position[1]);
-                    position[0] =- 1;
-                    position[1] =- 1;
-                    board.editSpace(1, position[0], position[1]);
-                    break;
-                case 5:
-                    // up, right
-                    if (position[0] == 0 || position[1] == 4)
-                    {
-                        break;
-                    }
-                    
-                    if (board.spaceOccupiedBy(position[0] - 1, position[1] + 1) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1] + 1) > 0)
-                    {
-                        break;
-                    }
-                    
-                    board.editSpace(0, position[0], position[1]);
-                    position[0] =- 1;
-                    position[1] =+ 1;
-                    board.editSpace(1, position[0], position[1]);
-                    break;
-                case 6:
-                    //down, left
-                    if (position[0] == 4 || position[1] == 0)
-                    {
-                        break;
-                    }
-                    
-                    if (board.spaceOccupiedBy(position[0] + 1, position[1] - 1) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1] - 1) > 0)
-                    {
-                        break;
-                    }
-                    
-                    board.editSpace(0, position[0], position[1]);
-                    position[0] =+ 1;
-                    position[1] =- 1;
-                    board.editSpace(1, position[0], position[1]);
-                    break;
-                case 7:
-                    // down, right
-                    if (position[0] == 4 || position[1] == 4)
-                    {
-                        break;
-                    }
-                    
-                    if (board.spaceOccupiedBy(position[0] + 1, position[1] + 1) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1] + 1) > 0)
-                    {
-                        break;
-                    }
-                    
-                    board.editSpace(0, position[0], position[1]);
-                    position[0] =+ 1;
-                    position[1] =+ 1;
-                    board.editSpace(1, position[0], position[1]);
-                    break;
+                }
+                
             }
-        }
+            
+            if (num == 1)
+            {
+                // down
+                if (position[0] == 4)
+                {
+                    count++;
+                }
+
+                if (board.spaceOccupiedBy(position[0] + 1, position[1]) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1]) > 0)
+                {
+                    count++;
+                }
+
+                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
+                {
+                    if (carrot < 1)
+                    {
+                        count++;
+                    }
+                }
+
+                if (count == 0)
+                {
+                    board.editSpace(0, position[0], position[1]);
+                    position[0] =+ 1;
+                    board.editSpace(1, position[0], position[1]);
+
+                    if (Arrays.equals(position, board.getCarrot()[0]) || Arrays.equals(position, board.getCarrot()[1]))
+                    {
+                        carrot += 1;
+                    }
+
+                    cont = false;
+                }  
+            }
+
+            if (num == 2)
+            {
+                // left
+                if (position[1] == 0)
+                {
+                    count++;
+                }
+
+                if (board.spaceOccupiedBy(position[0], position[1] - 1) < 5 && board.spaceOccupiedBy(position[0], position[1] - 1) > 0)
+                {
+                    count++;
+                }
+
+                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
+                {
+                    if (carrot < 1)
+                    {
+                        count++;
+                    }
+                }
+                
+                if (count == 0)
+                {
+                    board.editSpace(0, position[0], position[1]);
+                    position[1] =- 1;
+                    board.editSpace(1, position[0], position[1]);
+                    
+                    if (Arrays.equals(position, board.getCarrot()[0]) || Arrays.equals(position, board.getCarrot()[1]))
+                    {
+                        carrot += 1;
+                    }
+                    
+                    cont = false;
+                }
+            }
+
+            if (num == 3)
+            {
+                // right
+                if (position[1] == 4)
+                {
+                    count++;
+                }
+
+                if (board.spaceOccupiedBy(position[0], position[1] + 1) < 5 && board.spaceOccupiedBy(position[0], position[1] + 1) > 0)
+                {
+                    count++;
+                }
+
+                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
+                {
+                    if (carrot < 1)
+                    {
+                        count++;
+                    }
+                }
+                
+                if (count == 0)
+                {
+                    board.editSpace(0, position[0], position[1]);
+                    position[1] =+ 1;
+                    board.editSpace(1, position[0], position[1]);
+                    
+                    if (Arrays.equals(position, board.getCarrot()[0]) || Arrays.equals(position, board.getCarrot()[1]))
+                    {
+                        carrot += 1;
+                    }
+                    
+                    cont = false;
+                }
+            }
+
+            if (num == 4)
+            {
+                // up, left
+                if (position[0] == 0 || position[1] == 0)
+                {
+                    count++;
+                }
+
+                if (board.spaceOccupiedBy(position[0] - 1, position[1] - 1) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1] - 1) > 0)
+                {
+                    count++;
+                }
+
+                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
+                {
+                    if (carrot < 1)
+                    {
+                        count++;
+                    }
+                }
+                
+                if (count == 0)
+                {
+                    board.editSpace(0, position[0], position[1]);
+                    position[0] =- 1;
+                    position[1] =- 1;
+                    board.editSpace(1, position[0], position[1]);
+                    
+                    if (Arrays.equals(position, board.getCarrot()[0]) || Arrays.equals(position, board.getCarrot()[1]))
+                    {
+                        carrot += 1;
+                    }
+                    
+                    cont = false;
+                }
+            }
+
+            if (num == 5)
+            {
+                // up, right
+                if (position[0] == 0 || position[1] == 4)
+                {
+                    count++;
+                }
+
+                if (board.spaceOccupiedBy(position[0] - 1, position[1] + 1) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1] + 1) > 0)
+                {
+                    count++;
+                }
+
+                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
+                {
+                    if (carrot < 1)
+                    {
+                        count++;
+                    }
+                }
+                
+                if (count == 0)
+                {
+                    board.editSpace(0, position[0], position[1]);
+                    position[0] =- 1;
+                    position[1] =+ 1;
+                    board.editSpace(1, position[0], position[1]);
+                    
+                    if (Arrays.equals(position, board.getCarrot()[0]) || Arrays.equals(position, board.getCarrot()[1]))
+                    {
+                        carrot += 1;
+                    }
+                    
+                    cont = false;
+                }
+            }
+
+            if (num == 6)
+            {
+                //down, left
+                if (position[0] == 4 || position[1] == 0)
+                {
+                    count++;
+                }
+
+                if (board.spaceOccupiedBy(position[0] + 1, position[1] - 1) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1] - 1) > 0)
+                {
+                    count++;
+                }
+
+                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
+                {
+                    if (carrot < 1)
+                    {
+                        count++;
+                    }
+                }
+                
+                if (count == 0)
+                {
+                    board.editSpace(0, position[0], position[1]);
+                    position[0] =+ 1;
+                    position[1] =- 1;
+                    board.editSpace(1, position[0], position[1]);
+                    
+                    if (Arrays.equals(position, board.getCarrot()[0]) || Arrays.equals(position, board.getCarrot()[1]))
+                    {
+                        carrot += 1;
+                    }
+                    
+                    cont = false;
+                }
+            }
+            
+            if (num == 7)
+            {
+                // down, right
+                if (position[0] == 4 || position[1] == 4)
+                {
+                    count++;
+                }
+
+                if (board.spaceOccupiedBy(position[0] + 1, position[1] + 1) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1] + 1) > 0)
+                {
+                    count++;
+                }
+
+                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
+                {
+                    if (carrot < 1)
+                    {
+                        count++;
+                    }
+                }
+                    
+                if (count == 0)
+                {
+                    board.editSpace(0, position[0], position[1]);
+                    position[0] =+ 1;
+                    position[1] =+ 1;
+                    board.editSpace(1, position[0], position[1]);
+                    
+                    if (Arrays.equals(position, board.getCarrot()[0]) || Arrays.equals(position, board.getCarrot()[1]))
+                    {
+                        carrot += 1;
+                    }
+                    
+                    cont = false;
+                }
+            }
+        }    
     }
 }
