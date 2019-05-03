@@ -15,9 +15,6 @@ public class Toons {
         board.moveMountain();
         board.placeCarrots();
         
-        board.moveMountain();
-        board.placeCarrots();
-        
         bugs.giveStartingLocation();
         tweety.giveStartingLocation();
         taz.giveStartingLocation();
