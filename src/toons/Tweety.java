@@ -29,8 +29,8 @@ public class Tweety extends Thread {
                         lock.wait();
                     }
                     
-                    // add code below
-                    System.out.println();
+                    move();
+                    board.printBoard();
                     
                     
                     Thread.sleep(1000);
@@ -92,307 +92,38 @@ public class Tweety extends Thread {
     
     public void move()
     {
+        Random rand = new Random();
         boolean cont = true;
-        int count;
-        Random r = new Random();
-        int mountain[] = board.getMountain();
-        
-        while (cont)
-        {
-            count = 0;
-            int num = r.nextInt(8);
+        while(cont) {
+            int newX = position[0] + (rand.nextInt(2) - 1);
+            int newY = position[1] + (rand.nextInt(2) - 1);
             
-            if (num == 0)
-            {
-                 // up
-                if (position[0] == 0)
-                {
-                    count++;
-                }
-
-                if (board.spaceOccupiedBy(position[0] - 1, position[1]) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1]) > 0)
-                {
-                    count++;
-                }
-
-                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
-                {
-                    if (carrot < 1)
-                    {
-                        count++;
-                    }
-                }
-
-                if (count == 0)
-                {
+            int valueOfLocation = board.spaceOccupiedBy(newX, newY);
+            if (valueOfLocation == 0) {
+                board.editSpace(0, position[0], position[1]);
+                position[0] = newX;
+                position[1] = newY;
+                board.editSpace(2, newX, newY);
+                cont = false;
+            }
+            else if(valueOfLocation == 7) {
+                if (carrot == 0) {
                     board.editSpace(0, position[0], position[1]);
-                    position[0] =- 1;
-                    board.editSpace(1, position[0], position[1]);
-
-                    if (position.equals(board.getCarrot()[0]) || position.equals(board.getCarrot()[1]))
-                    {
-                        carrot += 1;
-                    }
-
+                    position[0] = newX;
+                    position[1] = newY;
+                    board.editSpace(2, newX, newY);
+                    carrot++;
                     cont = false;
                 }
             }
-
-            if (num == 1)
-            {
-                // down
-                if (position[0] == 4)
-                {
-                    count++;
-                }
-
-                if (board.spaceOccupiedBy(position[0] + 1, position[1]) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1]) > 0)
-                {
-                    count++;
-                }
-
-                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
-                {
-                    if (carrot < 1)
-                    {
-                        count++;
-                    }
-                }
-
-                if (count == 0)
-                {
+            else if(valueOfLocation == 8) {
+                if (carrot == 1) {
                     board.editSpace(0, position[0], position[1]);
-                    position[0] =+ 1;
-                    board.editSpace(1, position[0], position[1]);
-
-                    if (position.equals(board.getCarrot()[0]) || position.equals(board.getCarrot()[1]))
-                    {
-                        carrot += 1;
-                    }
-
-                    cont = false;
-                }  
-            }
-
-            if (num == 2)
-            {
-                // left
-                if (position[1] == 0)
-                {
-                    count++;
-                }
-
-                if (board.spaceOccupiedBy(position[0], position[1] - 1) < 5 && board.spaceOccupiedBy(position[0], position[1] - 1) > 0)
-                {
-                    count++;
-                }
-
-                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
-                {
-                    if (carrot < 1)
-                    {
-                        count++;
-                    }
-                }
-                
-                if (count == 0)
-                {
-                    board.editSpace(0, position[0], position[1]);
-                    position[1] =- 1;
-                    board.editSpace(1, position[0], position[1]);
-                    
-                    if (position.equals(board.getCarrot()[0]) || position.equals(board.getCarrot()[1]))
-                    {
-                        carrot += 1;
-                    }
-                    
+                    position[0] = newX;
+                    position[1] = newY;
                     cont = false;
                 }
             }
-
-            if (num == 3)
-            {
-                // right
-                if (position[1] == 4)
-                {
-                    count++;
-                }
-
-                if (board.spaceOccupiedBy(position[0], position[1] + 1) < 5 && board.spaceOccupiedBy(position[0], position[1] + 1) > 0)
-                {
-                    count++;
-                }
-
-                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
-                {
-                    if (carrot < 1)
-                    {
-                        count++;
-                    }
-                }
-                
-                if (count == 0)
-                {
-                    board.editSpace(0, position[0], position[1]);
-                    position[1] =+ 1;
-                    board.editSpace(1, position[0], position[1]);
-                    
-                    if (position.equals(board.getCarrot()[0]) || position.equals(board.getCarrot()[1]))
-                    {
-                        carrot += 1;
-                    }
-                    
-                    cont = false;
-                }
-            }
-
-            if (num == 4)
-            {
-                // up, left
-                if (position[0] == 0 || position[1] == 0)
-                {
-                    count++;
-                }
-
-                if (board.spaceOccupiedBy(position[0] - 1, position[1] - 1) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1] - 1) > 0)
-                {
-                    count++;
-                }
-
-                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
-                {
-                    if (carrot < 1)
-                    {
-                        count++;
-                    }
-                }
-                
-                if (count == 0)
-                {
-                    board.editSpace(0, position[0], position[1]);
-                    position[0] =- 1;
-                    position[1] =- 1;
-                    board.editSpace(1, position[0], position[1]);
-                    
-                    if (position.equals(board.getCarrot()[0]) || position.equals(board.getCarrot()[1]))
-                    {
-                        carrot += 1;
-                    }
-                    
-                    cont = false;
-                }
-            }
-
-            if (num == 5)
-            {
-                // up, right
-                if (position[0] == 0 || position[1] == 4)
-                {
-                    count++;
-                }
-
-                if (board.spaceOccupiedBy(position[0] - 1, position[1] + 1) < 5 && board.spaceOccupiedBy(position[0] - 1, position[1] + 1) > 0)
-                {
-                    count++;
-                }
-
-                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
-                {
-                    if (carrot < 1)
-                    {
-                        count++;
-                    }
-                }
-                
-                if (count == 0)
-                {
-                    board.editSpace(0, position[0], position[1]);
-                    position[0] =- 1;
-                    position[1] =+ 1;
-                    board.editSpace(1, position[0], position[1]);
-                    
-                    if (position.equals(board.getCarrot()[0]) || position.equals(board.getCarrot()[1]))
-                    {
-                        carrot += 1;
-                    }
-                    
-                    cont = false;
-                }
-            }
-
-            if (num == 6)
-            {
-                //down, left
-                if (position[0] == 4 || position[1] == 0)
-                {
-                    count++;
-                }
-
-                if (board.spaceOccupiedBy(position[0] + 1, position[1] - 1) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1] - 1) > 0)
-                {
-                    count++;
-                }
-
-                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
-                {
-                    if (carrot < 1)
-                    {
-                        count++;
-                    }
-                }
-                
-                if (count == 0)
-                {
-                    board.editSpace(0, position[0], position[1]);
-                    position[0] =+ 1;
-                    position[1] =- 1;
-                    board.editSpace(1, position[0], position[1]);
-                    
-                    if (position.equals(board.getCarrot()[0]) || position.equals(board.getCarrot()[1]))
-                    {
-                        carrot += 1;
-                    }
-                    
-                    cont = false;
-                }
-            }
-            
-            if (num == 7)
-            {
-                // down, right
-                if (position[0] == 4 || position[1] == 4)
-                {
-                    count++;
-                }
-
-                if (board.spaceOccupiedBy(position[0] + 1, position[1] + 1) < 5 && board.spaceOccupiedBy(position[0] + 1, position[1] + 1) > 0)
-                {
-                    count++;
-                }
-
-                if (mountain[0] == position[0] - 1 && mountain[1] == position[1])
-                {
-                    if (carrot < 1)
-                    {
-                        count++;
-                    }
-                }
-                    
-                if (count == 0)
-                {
-                    board.editSpace(0, position[0], position[1]);
-                    position[0] =+ 1;
-                    position[1] =+ 1;
-                    board.editSpace(1, position[0], position[1]);
-                    
-                    if (position.equals(board.getCarrot()[0]) || position.equals(board.getCarrot()[1]))
-                    {
-                        carrot += 1;
-                    }
-                    
-                    cont = false;
-                }
-            }
-        }    
+        }
     }
 }
