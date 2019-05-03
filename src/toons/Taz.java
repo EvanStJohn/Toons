@@ -29,7 +29,8 @@ public class Taz extends Thread {
                         lock.wait();
                     }
                     
-                    // add code below
+                    move();
+                    board.printBoard();
                     
                     
                     
@@ -121,7 +122,6 @@ public class Taz extends Thread {
                     board.editSpace(0, position[0], position[1]);
                     position[0] = newX;
                     position[1] = newY;
-                    isWinner(); //Check to see if winner. Add winning functionality here.
                     cont = false;
                 }
             }
