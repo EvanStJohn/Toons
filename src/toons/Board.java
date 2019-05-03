@@ -65,7 +65,15 @@ public class Board {
     
     public int spaceOccupiedBy(int x, int y)
     {
-        return board[x][y];
+        if (x < 0 || x > 4) {
+            return -1;
+        }
+        else if (y < 0 || y > 4) {
+            return -1;
+        }
+        else {
+            return board[x][y];
+        }
     }
     
     public void editSpace(int newID, int x, int y)
