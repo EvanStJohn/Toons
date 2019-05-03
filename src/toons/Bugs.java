@@ -96,7 +96,6 @@ public class Bugs extends Thread {
         boolean cont = true;
         while(cont) {
             int vertOrhoriz = rand.nextInt(2);
-            System.out.print(vertOrhoriz);
             int newX;
             int newY;
             if (vertOrhoriz == 0) {
