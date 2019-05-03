@@ -20,6 +20,8 @@ public class Toons {
         taz.giveStartingLocation();
         marvin.giveStartingLocation();
         
+        board.printBoard();
+        
         bugs.start();
         tweety.start();
         taz.start();
