@@ -23,7 +23,7 @@ public class Tweety extends Thread {
         {
             synchronized(lock)
             {
-                while (!isWinner() && isLiving())
+                while (board.getWinner() == 0 && isLiving())
                 {
                     while(lock.flag != 2)
                     {
@@ -32,6 +32,7 @@ public class Tweety extends Thread {
                     
                     move();
                     board.printBoard();
+                    isWinner();
                     
                     
                     Thread.sleep(1000);
@@ -63,6 +64,7 @@ public class Tweety extends Thread {
         if (Arrays.equals(position, board.getMountain()))
         {
             board.setWinner(2);
+            System.out.println("Tweety is the winner");
             return true;
         }
         else

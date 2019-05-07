@@ -23,7 +23,7 @@ public class Marvin extends Thread {
         {
             synchronized(lock)
             {
-                while (!isWinner())
+                while (board.getWinner() == 0)
                 {
                     while(lock.flag != 4)
                     {
@@ -72,6 +72,7 @@ public class Marvin extends Thread {
         if (carrot == 2 || !board.isLiving())
         {
             board.setWinner(4);
+            System.out.println("Marvin the Martian is the winner");
             return true;
         }
         else

@@ -23,7 +23,7 @@ public class Bugs extends Thread {
         {
             synchronized(lock)
             {
-                while (!isWinner() && isLiving())
+                while (board.getWinner() == 0 && isLiving())
                 {
                     while(lock.flag != 1)
                     {
@@ -31,7 +31,8 @@ public class Bugs extends Thread {
                     }
                     
                     move();
-                    board.printBoard();   
+                    board.printBoard();
+                    isWinner();
                       
                     Thread.sleep(1000);
                     lock.flag = 2;
@@ -62,6 +63,7 @@ public class Bugs extends Thread {
         if (Arrays.equals(position, board.getMountain()))
         {
             board.setWinner(1);
+            System.out.println("Bugs Bunny is the winner");
             return true;
         }
         else

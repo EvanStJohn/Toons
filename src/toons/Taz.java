@@ -23,7 +23,7 @@ public class Taz extends Thread {
         {
             synchronized(lock)
             {
-                while (!isWinner() && isLiving())
+                while (board.getWinner() == 0 && isLiving())
                 {
                     while(lock.flag != 3)
                     {
@@ -32,6 +32,7 @@ public class Taz extends Thread {
                     
                     move();
                     board.printBoard();
+                    isWinner();
                     
                     
                     
@@ -64,6 +65,7 @@ public class Taz extends Thread {
         if (Arrays.equals(position, board.getMountain()))
         {
             board.setWinner(3);
+            System.out.println("The Tazmanian Devil is the winner");
             return true;
         }
         else
