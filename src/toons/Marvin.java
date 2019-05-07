@@ -7,6 +7,7 @@ public class Marvin extends Thread {
     Mutex lock;
     int carrot = 0; // amount of carrots being held
     int[] position = new int[2];
+    int turn = 0;
     Board board;
     
     Marvin(Mutex lock, Board board)
@@ -31,7 +32,16 @@ public class Marvin extends Thread {
                     
                     // add code below
                     
-                    
+                    if(turn == 3)
+                    {
+                        board.editSpace(0, board.getMountain()[0], board.getMountain()[1]);
+                        board.moveMountain();
+                        turn = 0;
+                    }
+                    else
+                    {
+                        turn++;
+                    }
                     
                     Thread.sleep(1000);
                     lock.flag = 1;
@@ -61,6 +71,7 @@ public class Marvin extends Thread {
     {
         if (carrot == 2 || !board.isLiving())
         {
+            board.setWinner(4);
             return true;
         }
         else

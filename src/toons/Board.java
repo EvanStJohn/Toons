@@ -45,6 +45,16 @@ public class Board {
         taz = false;
     }
     
+    public void setWinner(int num)
+    {
+        winner = num;
+    }
+    
+    public int getWinner()
+    {
+        return winner;
+    }
+    
     // check if bugs is alive
     public boolean getBugs()
     {

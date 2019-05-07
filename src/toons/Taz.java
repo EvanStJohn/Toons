@@ -1,5 +1,6 @@
 package toons;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Taz extends Thread {
@@ -60,8 +61,9 @@ public class Taz extends Thread {
     
     public boolean isWinner()
     {
-        if (position.equals(board.getMountain()))
+        if (Arrays.equals(position, board.getMountain()))
         {
+            board.setWinner(3);
             return true;
         }
         else

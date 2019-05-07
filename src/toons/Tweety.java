@@ -1,5 +1,6 @@
 package toons;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Tweety extends Thread {
@@ -59,8 +60,9 @@ public class Tweety extends Thread {
     
     public boolean isWinner()
     {
-        if (position.equals(board.getMountain()))
+        if (Arrays.equals(position, board.getMountain()))
         {
+            board.setWinner(2);
             return true;
         }
         else

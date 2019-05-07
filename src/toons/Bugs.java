@@ -59,8 +59,9 @@ public class Bugs extends Thread {
     
     public boolean isWinner()
     {
-        if (position.equals(board.getMountain()))
+        if (Arrays.equals(position, board.getMountain()))
         {
+            board.setWinner(1);
             return true;
         }
         else
