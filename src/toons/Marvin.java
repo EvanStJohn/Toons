@@ -145,6 +145,7 @@ public class Marvin extends Thread {
                     currentPiece = " M(C)";
                 }
                 board.editSpace(currentPiece, newX, newY);
+                cont = false;
             }
             else if (valueOfLocation == "  T  " || valueOfLocation == " T(C)") {
                 board.killTweety();
@@ -156,6 +157,7 @@ public class Marvin extends Thread {
                     currentPiece = " M(C)";                    
                 }
                 board.editSpace(currentPiece, newX, newY);
+                cont = false;
             }
             else if (valueOfLocation == "  D  " || valueOfLocation == " D(C)") {
                 board.killTaz();
@@ -167,6 +169,7 @@ public class Marvin extends Thread {
                     currentPiece = " M(C)";                    
                 }                
                 board.editSpace(currentPiece, newX, newY);
+                cont = false;
             }
         }
     } 
