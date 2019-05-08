@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Board {
     
-    private int[][] board = new int[5][5];
+    private String[][] board = new String[5][5];
     private int[] mountain = new int[2];
     private int[][] carrot = new int[2][2];
     private int winner = 0; // id of the winning toon
@@ -15,7 +15,11 @@ public class Board {
     
     public Board()
     {
-        
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                board[i][j] = "  -  ";
+            }
+        }
     }
     
     // get position of the mountain
@@ -32,16 +36,22 @@ public class Board {
     
     public void killBugs()
     {
+        System.out.println("Bugs has been killed");
+        alive--;
         bugs = false;
     }
     
     public void killTweety()
     {
+        System.out.println("Tweety has been killed");
+        alive--;
         tweety = false;
     }
     
     public void killTaz()
     {
+        System.out.println("Taz has been killed");
+        alive--;
         taz = false;
     }
     
@@ -73,26 +83,26 @@ public class Board {
         return taz;
     }
     
-    public int spaceOccupiedBy(int x, int y)
+    public String spaceOccupiedBy(int x, int y)
     {
         if (x < 0 || x > 4) {
-            return -1;
+            return "Out of Bounds";
         }
         else if (y < 0 || y > 4) {
-            return -1;
+            return "Out of Bounds";
         }
         else {
             return board[x][y];
         }
     }
     
-    public void editSpace(int newID, int x, int y)
+    public void editSpace(String newID, int x, int y)
     {
         board[x][y] = newID;
     }
     
     // check if there toons to keep the game running
-    public boolean isLiving()
+    public boolean playersRemaining()
     {
         if (alive > 0)
         {
@@ -113,10 +123,10 @@ public class Board {
             int x = r.nextInt(4);
             int y = r.nextInt(4);
             
-            if (spaceOccupiedBy(x, y) == 0) {
+            if (spaceOccupiedBy(x, y) == "  -  ") {
                 mountain[0] = x;
                 mountain[1] = y;
-                board[x][y] = 8;
+                board[x][y] = "  F  ";
                 cont = false;
             }
         }
@@ -132,10 +142,10 @@ public class Board {
             int x = r.nextInt(4);
             int y = r.nextInt(4);
             
-            if (spaceOccupiedBy(x, y) == 0) {
+            if (spaceOccupiedBy(x, y) == "  -  ") {
                 carrot[c][0] = x;
                 carrot[c][1] = y;
-                board[x][y] = 7;
+                board[x][y] = "  C  ";
                 
                 c++;
             }
@@ -152,6 +162,6 @@ public class Board {
             }
             System.out.println();
         }
-        System.out.println("--------------");
+        System.out.println("=======================");
     }    
 }
